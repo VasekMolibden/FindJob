@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\WorkScheduleRequest;
 use App\Models\WorkSchedule;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,10 @@ class WorkScheduleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WorkScheduleRequest $request)
     {
+        $request->validated();
+
         $work_schedule = new WorkSchedule();
         $work_schedule->work_schedule = $request->work_schedule;
         $work_schedule->save();
@@ -78,8 +81,10 @@ class WorkScheduleController extends Controller
      * @param  \App\Models\WorkSchedule  $work_schedule
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WorkSchedule $work_schedule)
+    public function update(WorkScheduleRequest $request, WorkSchedule $work_schedule)
     {
+        $request->validated();
+
         $work_schedule->work_schedule = $request->work_schedule;
         $work_schedule->save();
 

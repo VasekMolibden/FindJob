@@ -48,16 +48,21 @@
                                 </td>
 
                                 <td class="project-actions text-right">
-                                    <a class="btn btn-outline-primary btn-sm" href="{{ route('role.edit', $role['id']) }}" title="Редактировать">
-                                        <i class="fa-solid fa-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('role.destroy', $role['id']) }}" method="POST" style="display: inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm delete-btn" title="Удалить">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </form>
+                                    @if($role['name'] != 'admin')
+                                        <a class="btn btn-outline-primary btn-sm" href="{{ route('role.edit', $role['id']) }}" title="Редактировать">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </a>
+                                    @endif
+
+                                    @if($role['name'] != 'admin' && $role['name'] != 'user')
+                                        <form action="{{ route('role.destroy', $role['id']) }}" method="POST" style="display: inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger btn-sm delete-btn" title="Удалить">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

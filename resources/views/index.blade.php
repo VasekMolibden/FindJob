@@ -198,6 +198,7 @@
                 }
             </style>
             @include('messages')
+            @if(count($posts))
             <section class="categories mb-4 mt-3">
                 <div class="carousel" data-flickity='{ "contain": true, "draggable": true, "pageDots": false, "autoPlay": true, "initialIndex": 1 }'>
                 @foreach($categories as $category)
@@ -221,9 +222,18 @@
             @foreach($posts as $post)
 
             <div class="card h-100 shadow my-3">
-                <a href="{{ route('post', $post->id) }}" title="{{ $post->name }}" class="">
+                <a href="{{ route('post', $post->id) }}" title="{{ $post->name }}">
                     <img src="{{ asset($post->image) }}" class="img-post mx-auto my-auto rounded p-2" alt="post">
+                    <div class="card-desc p-2">
+                        <p><b><i class="fas fa-city opacity-25 me-1"></i>Город:</b> {{ $post->city->city }}</p>
+                        <p><b><i class="fas fa-check-double opacity-25 me-2"></i>Тип:</b> {{ $post->post_type->post_type }}</p>
+                        <p><b><i class="fas fa-list opacity-25 me-2"></i>Категория:</b> {{ $post->category->category }}</p>
+                        <p><b><i class="fas fa-graduation-cap opacity-25 me-1"></i>Образование:</b> {{ $post->education->education }}</p>
+                        <p><b><i class="fa-solid fa-chart-line opacity-25 me-2"></i>Опыт:</b> {{ $post->work_experience->work_experience }}</p>
+                        <p><b><i class="fas fa-briefcase opacity-25 me-2"></i>График:</b> {{ $post->work_schedule->work_schedule }}</p>
+                    </div>
                 </a>
+
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <div class="col-8">
@@ -256,6 +266,9 @@
                 </div>
             </div>
             @endforeach
+            @else
+                <h3 class="text-muted text-center mt-5">Публикаций пока нет</h3>
+            @endif
         </div>
     </section>
 

@@ -32,10 +32,10 @@
                                            id="name" placeholder="Введите имя пользователя" maxlength="20" required>
                                 </div>
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label for="phone">Телефон</label>
                                     <input type="text" name="phone" id="phone" class="form-control" placeholder="Введите телефон" maxlength="11" pattern="^[0-9]{11}$" required>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <label for="email">Почта</label>

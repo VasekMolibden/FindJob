@@ -12,7 +12,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -55,7 +57,7 @@ class UserController extends Controller
     {
         $user = User::create($request->validated());
 
-        return view('/authorization')->with('success', 'yspeshno');
+        return view('authorization')->with('success', 'yspeshno');
     }
 
     public function show($id)
@@ -68,21 +70,52 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('profile_edit', compact('user'));
+        $roles = Role::orderBy('name')->get();
+
+        return view('profile_edit', compact('user', 'roles'));
     }
 
     public function update(Request $request, User $user)
     {
+        if(\auth()->user()->can('edit all profiles')) {
+            $request->validate([
+                'role_id' => 'required|integer|exists:roles,id',
+            ]);
+        }
+
         $user->name = $request->name;
-        $user->phone = $request->phone;
+        //$user->phone = $request->phone;
         //$user->email = $request->email;
         $user->description = $request->description;
-        if(isset($request->image)){
+        if (isset($request->image)) {
             $user->image = $request->image->store('public/img/user_img');
         }
+        if (!$user->hasRole('admin') && auth()->user()->id != $user->id){
+            $role = Role::findOrFail($request->role_id);
+            $user->syncRoles([$role->name]);
+        }
+
         $user->save();
 
         return redirect()->route('profile', $user->id)->withSuccess('Профиль успешно обновлен');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'old_password' => 'required|min:5',
+            'password' => 'required|min:5|confirmed',
+        ]);
+
+        $user = User::findOrFail(\auth()->user()->id);
+
+        if(Hash::check(request('old_password'), $user->password)){
+            $user->password = Hash::make($request["password"]);
+            $user->save();
+            return redirect()->route('editUser', $user)->withSuccess('Пароль успешно изменен');
+        };
+
+        return back()->withErrors('Неверный пароль');
     }
 
     public function destroy(User $user)
@@ -92,8 +125,8 @@ class UserController extends Controller
                 unlink(base_path().'/'.$user->image);
             }
             $user->delete();
+            return redirect(RouteServiceProvider::HOME)->with('success', 'Пользователь успешно удален');
         }
-
-        return redirect(RouteServiceProvider::HOME)->with('success', 'Пользователь удален.');
+        return redirect()->back();
     }
 }

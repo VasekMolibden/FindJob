@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostTypeRequest;
 use App\Models\PostType;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,10 @@ class PostTypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostTypeRequest $request)
     {
+        $request->validated();
+
         $post_type = new PostType();
         $post_type->post_type = $request->post_type;
         $post_type->save();
@@ -78,8 +81,10 @@ class PostTypeController extends Controller
      * @param  \App\Models\PostType  $post_type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PostType $post_type)
+    public function update(PostTypeRequest $request, PostType $post_type)
     {
+        $request->validated();
+
         $post_type->post_type = $request->post_type;
         $post_type->save();
 

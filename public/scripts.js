@@ -11,11 +11,11 @@ $(document).ready(function(){   //когда браузер загрузит HTM
 window.addEventListener("DOMContentLoaded", function () {   //когда был загружен HTML
 
     let email = document.getElementById('email'),   //ссылка на элемент по идентификатору
-        phone = document.getElementById('phone'),
+        //phone = document.getElementById('phone'),
         name = document.getElementById('name'),
         password = document.getElementById('password'),
         invalid_email = document.querySelector('.invalid_email'),   //ссылка на элемент по селектору
-        invalid_phone = document.querySelector('.invalid_phone'),
+        //invalid_phone = document.querySelector('.invalid_phone'),
         invalid_name = document.querySelector('.invalid_name'),
         invalid_password = document.querySelector('.invalid_password');
 
@@ -31,7 +31,7 @@ window.addEventListener("DOMContentLoaded", function () {   //когда был 
         }
     });
 
-    phone.addEventListener('input', function (event) {  //обработчик событий для поля ввода номера телефона
+    /*phone.addEventListener('input', function (event) {  //обработчик событий для поля ввода номера телефона
         let regexp = /^[0-9]{11}$/u;    //регулярное выражение для номера телефона
         if (!regexp.test(phone.value)) {    //проверка на соответствие регулярному выражению
             invalid_phone.innerText = `Проверьте корректность номера телефона`; //вывод ошибки, если не соответствует регулярному выражению
@@ -41,7 +41,7 @@ window.addEventListener("DOMContentLoaded", function () {   //когда был 
             phone.classList.remove('is-invalid');
             phone.classList.add('is-valid');
         }
-    });
+    });*/
 
     name.addEventListener('input', function (event) {   //обработчик событий для поля ввода имени
         let regexp = /^[a-zA-Z0-9]{2,20}$/u;    //регулярное выражение для имени
@@ -74,7 +74,7 @@ function matching_passwords() {     //функция для проверки с�
         password_mismatch = document.querySelector('.password_mismatch'),   //ссылка на элемент по селектору
         buttonForm = document.querySelector('.valid');
 
-    if (password.value != passwordconfirmation.value) {     //если пароли не совпадают
+    if (password.value !== passwordconfirmation.value) {     //если пароли не совпадают
         password_mismatch.innerText = `Пароли не совпадают`;    //вывод ошибки
         passwordconfirmation.classList.add('is-invalid');
         buttonForm.setAttribute('disabled', true);  //отключение кнопки

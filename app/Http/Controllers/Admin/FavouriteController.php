@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FavouriteAddRequest;
 use App\Models\Favourite;
 use App\Models\Post;
 use App\Models\User;
@@ -42,8 +43,10 @@ class FavouriteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FavouriteAddRequest $request)
     {
+        $request->validated();
+
         $favourite = new Favourite();
         $favourite->user_id = $request->user_id;
         $favourite->post_id = $request->post_id;
@@ -83,8 +86,10 @@ class FavouriteController extends Controller
      * @param  \App\Models\Favourite  $favourite
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Favourite $favourite)
+    public function update(FavouriteAddRequest $request, Favourite $favourite)
     {
+        $request->validated();
+
         $favourite->user_id = $request->user_id;
         $favourite->post_id = $request->post_id;
         $favourite->save();

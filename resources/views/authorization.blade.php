@@ -3,7 +3,7 @@
 @section('title')Авторизация@endsection
 
 @section('main')
-<main class="py-4">
+<main class="py-4 mt-5">
     <div class="container">
 
         @include('messages')
@@ -17,13 +17,13 @@
                 <div class="invalid_email text-danger small"></div>
             </div>
             <div class="form-floating mb-3">
-                <input type="password" name="password" id="password" class="form-control password" maxlength="40" placeholder="Пароль" required>
+                <input type="password" name="password" id="password" class="form-control password" maxlength="40" placeholder="Пароль" autocomplete="on" required>
                 <label for="password">Пароль</label>
                 <div class="invalid_password text-danger small"></div>
             </div>
             <div class="row mb-4">
                 <div class="text-center">
-                    <a class="link-dark forgot_password" href="/password">Забыли пароль?</a>
+                    <a class="link-dark forgot_password" href="{{ route('password.request') }}">Забыли пароль?</a>
                 </div>
             </div>
             <div class="text-center text-end mb-4">

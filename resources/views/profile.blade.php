@@ -27,6 +27,14 @@
 					<div class="card h-100 shadow my-3">
 						<a href="{{ route('post', $post->id) }}" title="{{ $post->name }}" class="">
 							<img src="{{ asset($post->image) }}" class="img-post mx-auto my-auto rounded p-2" alt="post">
+                            <div class="card-desc p-2">
+                                <p><b><i class="fas fa-city opacity-25 me-1"></i>Город:</b> {{ $post->city->city }}</p>
+                                <p><b><i class="fas fa-check-double opacity-25 me-2"></i>Тип:</b> {{ $post->post_type->post_type }}</p>
+                                <p><b><i class="fas fa-list opacity-25 me-2"></i>Категория:</b> {{ $post->category->category }}</p>
+                                <p><b><i class="fas fa-graduation-cap opacity-25 me-1"></i>Образование:</b> {{ $post->education->education }}</p>
+                                <p><b><i class="fa-solid fa-chart-line opacity-25 me-2"></i>Опыт:</b> {{ $post->work_experience->work_experience }}</p>
+                                <p><b><i class="fas fa-briefcase opacity-25 me-2"></i>График:</b> {{ $post->work_schedule->work_schedule }}</p>
+                            </div>
 						</a>
 						<div class="card-body">
 							<div class="row justify-content-between">
@@ -98,7 +106,7 @@
             </div>
             <div class="delete">
                 <div class="text-center text-end mb-4">
-                    @if (auth()->user()->can('delete', $user))
+                    @if (auth()->user()->can('delete', $user) && !$user->hasRole('admin'))
                     <form method="post" name="deleteUser" action="{{ route('deleteUser', $user) }}">
                         @csrf
                         @method('DELETE')

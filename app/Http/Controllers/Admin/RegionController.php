@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegionRequest;
 use App\Models\Region;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,10 @@ class RegionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegionRequest $request)
     {
+        $request->validated();
+
         $region = new Region();
         $region->region = $request->region;
         $region->save();
@@ -78,8 +81,10 @@ class RegionController extends Controller
      * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Region $region)
+    public function update(RegionRequest $request, Region $region)
     {
+        $request->validated();
+
         $region->region = $request->region;
         $region->save();
 

@@ -18,9 +18,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {{--<script src="https://cdn.tiny.cloud/1/14stg90qs04ggumtrl3qdykdty6hvdb9p9bryig39coflae5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>--}}
-    <script src="https://cdn.tiny.cloud/1/14stg90qs04ggumtrl3qdykdty6hvdb9p9bryig39coflae5/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script src="/admin/admin.js"></script>
+    <script src="{{ asset('tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+    <script src="{{ asset('/admin/admin.js') }}"></script>
 
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
@@ -86,7 +85,7 @@
                     @endrole
                 </ul>
 
-                <form action="{{ route('search') }}" method="get" name="search">
+                <form action="{{ route('search') }}" method="get" name="search" class="mx-auto">
                     <div class="search input-group">
                         <input type="text" class="form-control" id="text" name="text" placeholder="Поиск" maxlength="50" aria-label="Поиск" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -96,15 +95,72 @@
                 </form>
 
                 @auth
-                <a class="nav-link" href="{{ route('favourites') }}" title="Избранное"><i class="far fa-heart"></i></a>
-                @if (auth()->user()->can('create', 'App\Models\Post'))
-                    <a class="btn btn-outline-primary mx-2" title="Создать публикацию" href="{{ route('create') }}" role="button">Создать публикацию</a>
-                @endif
+                    {{--<a class="nav-link" href="{{ route('favourites') }}" title="Избранное"><i class="far fa-heart"></i></a>--}}
+                    @if (auth()->user()->can('create', 'App\Models\Post'))
+                        <a class="btn btn-outline-primary mx-auto" title="Создать публикацию" href="{{ route('create') }}" role="button">Создать публикацию</a>
+                    @endif
 
-                <div class="col-md-3 text-end">
-                    <a class="btn btn-outline-primary mx-2" title="Профиль" href="{{ route('profile', auth()->id()) }}" role="button">Профиль</a>
-                    <a  class="btn btn-primary mx-2" title="Выйти" href="{{ route('exit') }}" role="button">Выход</a>
-                </div>
+                    {{-- <div class="col-md-3 text-end">
+                        <a class="btn btn-outline-primary mx-2" title="Профиль" href="{{ route('profile', auth()->id()) }}" role="button">Профиль</a>
+                        <a  class="btn btn-primary mx-2" title="Выйти" href="{{ route('exit') }}" role="button">Выход</a>
+                    </div>--}}
+
+                    <div class="dropdown mx-5">
+                        <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle user text-primary" id="dropdownMenuButton1" aria-expanded="false"><img src="{{ asset(auth()->user()->image) }}" class="avatar mx-auto my-auto rounded p-2" alt="avatar"> {{ auth()->user()->name }} </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                            <li><a href="{{ route('profile', auth()->id()) }}" class="dropdown-item"><i class="fas fa-user"></i> Мой профиль</a></li>
+                            <li><a href="{{ route('favourites') }}" class="dropdown-item"><i class="fa fa-heart"></i> Избранное</a></li>
+                            <li><a href="{{ route('editUser', auth()->user()) }}" class="dropdown-item"><i class="fa-solid fa-pencil"></i> Редактирование</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a href="{{ route('exit') }}" class="dropdown-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Выход</a></li>
+                        </ul>
+                    </div>
+
+                    <style>
+                        .dropdown .avatar{
+                            height: 45px;
+                            width: 45px;
+                            border-radius: 50%!important;
+                            object-fit: cover;
+                        }
+
+                        header .user{
+
+                        }
+
+                        ul li i {
+                            font-size: 18px;
+                        }
+                        .dropdown-menu i {
+                            font-size: 16px;
+                            min-width: 22px;
+                        }
+                        .dropdown.open > a {
+                            background: none !important;
+                        }
+                        .dropdown-menu {
+                            border-radius: 1px;
+                            border-color: #e5e5e5;
+                            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+                        }
+                        .dropdown-menu li a {
+                            color: #777;
+                            padding: 8px 20px;
+                            line-height: normal;
+                        }
+                        .dropdown-menu li a:hover{
+                            color: #333;
+                        }
+                        .navbar .dropdown-menu li a:active {
+                            background: #d5d5d5;
+                        }
+                        .dropdown-menu .material-icons {
+                            font-size: 21px;
+                            line-height: 16px;
+                            vertical-align: middle;
+                            margin-top: -2px;
+                        }
+                    </style>
                 @endauth
 
                 @guest
@@ -121,30 +177,6 @@
 
 @yield('main')
 
-{{--<footer class="shadow">
-    <section class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <h4><a href="{{ route('index') }}" title="Главная страница">Главная</a></h4>
-                </div>
-
-                <div class="col-md-3">
-                    <h4><a href="/user_agreement" title="Пользовательское соглашение" style="margin-left: -70px;">Пользовательское соглашение</a></h4>
-                </div>
-
-                <div class="col-md-2">
-                    <h4><a href="/about" title="О сайте">О сайте</a></h4>
-                </div>
-
-                <div class="col-md-3 inc">
-                    <h4>© {{ date('Y') }} FindJob, Inc.</h4>
-                </div>
-
-            </div>
-        </div>
-    </section>
-</footer>--}}
 <footer class="footer border-top border-2">
     <div class="container">
         <div class="row justify-content-center">

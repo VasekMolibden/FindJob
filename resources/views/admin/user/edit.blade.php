@@ -33,10 +33,10 @@
                                            id="name" placeholder="Введите имя пользователя" maxlength="20" required>
                                 </div>
 
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label for="phone">Телефон</label>
                                     <input type="text" value="{{ $user['phone'] }}" name="phone" id="phone" class="form-control" placeholder="Введите телефон" maxlength="11" pattern="^[0-9]{11}$" required>
-                                </div>
+                                </div>-->
 
                                 <div class="form-group">
                                     <label for="email">Почта</label>
@@ -54,14 +54,16 @@
                                     <input type="file" class="form-control form-control-sm" id="image" name="image">
                                 </div>
 
-                                <div class="mb-3" title="Роль">
-                                    <label for="role_id" class="form-label">Роль</label>
-                                    <select name="role_id" id="role_id" class="form-select" aria-label="role">
-                                        @foreach($roles as $role)
-                                            <option value="{{ $role->id }}" @if($user->hasRole($role['name'])) selected @endif>{{ $role->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                @if (!$user->hasRole('admin') && auth()->user()->id != $user->id)
+                                    <div class="mb-3" title="Роль">
+                                        <label for="role_id" class="form-label">Роль</label>
+                                        <select name="role_id" id="role_id" class="form-select" aria-label="role">
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}" @if($user->hasRole($role['name'])) selected @endif>{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endif
                             </div>
                             <!-- /.card-body -->
 

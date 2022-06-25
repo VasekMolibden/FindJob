@@ -31,9 +31,9 @@
                             <th>
                                 Имя
                             </th>
-                            <th>
+                            <!--<th>
                                 Телефон
-                            </th>
+                            </th>-->
                             <th>
                                 Почта
                             </th>
@@ -62,9 +62,9 @@
                                 <td>
                                     <div style="height:20px;overflow:hidden;"> <a href="{{route('profile', $user['id'])}}"> {{ $user['name'] }}</a></div>
                                 </td>
-                                <td>
+                                <!--<td>
                                     <div style="height:20px;overflow:hidden;"> {{ $user['phone'] }}</div>
-                                </td>
+                                </td>-->
                                 <td>
                                     {{ $user['email'] }}
                                 </td>
@@ -87,14 +87,16 @@
                                     <a class="btn btn-outline-primary btn-sm" href="{{ route('user.edit', $user['id']) }}" title="Редактировать">
                                         <i class="fa-solid fa-pencil"></i>
                                     </a>
-                                    <form action="{{ route('user.destroy', $user['id']) }}" method="POST"
-                                          style="display: inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger btn-sm delete-btn" title="Удалить">
-                                            <i class="fa-solid fa-trash-can"></i>
-                                        </button>
-                                    </form>
+                                    @if(!$user->hasRole('admin'))
+                                        <form action="{{ route('user.destroy', $user['id']) }}" method="POST"
+                                              style="display: inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger btn-sm delete-btn" title="Удалить">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

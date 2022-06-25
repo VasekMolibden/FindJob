@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -44,15 +46,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
+        /*$request->validate([
             'role_id' => 'required|integer|exists:roles,id',
-        ]);
+        ]);*/
+        $request->validated();
 
         $user = new User();
         $user->name = $request->name;
-        $user->phone = $request->phone;
+        //$user->phone = $request->phone;
         $user->email = $request->email;
         $user->description = $request->description;
         if(isset($request->image)){
@@ -64,6 +67,9 @@ class UserController extends Controller
         $user->assignRole($role);
 
         $user->save();
+
+        //event(new Registered($user));
+        $user->markEmailAsVerified();
 
         return redirect()->route('user.index')->withSuccess('Пользователь успешно добавлен');
     }
@@ -109,15 +115,17 @@ class UserController extends Controller
         ]);
 
         $user->name = $request->name;
-        $user->phone = $request->phone;
+        //$user->phone = $request->phone;
         $user->email = $request->email;
         if(isset($request->image)){
             $user->image = $request->image->store('public/img/user_img');
         }
         $user->description = $request->description;
 
-        $role = Role::findOrFail($request->role_id);
-        $user->syncRoles([$role->name]);
+        if (!$user->hasRole('admin') && auth()->user()->id != $user->id) {
+            $role = Role::findOrFail($request->role_id);
+            $user->syncRoles([$role->name]);
+        }
 
         $user->save();
 
@@ -137,7 +145,8 @@ class UserController extends Controller
                 unlink(base_path().'/'.$user->image);
             }
             $user->delete();
+            return redirect()->back()->withSuccess('Пользователь успешно удален');
         }
-        return redirect()->back()->withSuccess('Пользователь успешно удален');
+        return redirect()->back();
     }
 }

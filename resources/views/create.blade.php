@@ -8,8 +8,8 @@
 
             @include('messages')
 
-            <form class="border border-1 mx-auto w-50 p-5" action="{{ route('addPost') }}" method="post"
-                  enctype="multipart/form-data" name="create">
+            <form class="border border-1 mx-auto p-5" action="{{ route('addPost') }}" method="post"
+                  enctype="multipart/form-data" name="create" style="width: 60%">
                 @csrf
                 <h4 class="mb-4 text-center"><b>Создание</b></h4>
 

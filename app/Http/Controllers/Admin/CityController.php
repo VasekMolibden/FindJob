@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CityRequest;
 use App\Models\City;
 use App\Models\Region;
 use Illuminate\Http\Request;
@@ -40,8 +41,10 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CityRequest $request)
     {
+        $request->validated();
+
         $city = new City();
         $city->city = $request->city;
         $city->region_id = $request->region_id;
@@ -80,8 +83,10 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(CityRequest $request, City $city)
     {
+        $request->validated();
+
         $city->city = $request->city;
         $city->region_id = $request->region_id;
         $city->save();

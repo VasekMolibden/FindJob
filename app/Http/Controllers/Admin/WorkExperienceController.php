@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\WorkExperienceRequest;
 use App\Models\WorkExperience;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,10 @@ class WorkExperienceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(WorkExperienceRequest $request)
     {
+        $request->validated();
+
         $work_experience = new WorkExperience();
         $work_experience->work_experience = $request->work_experience;
         $work_experience->save();
@@ -78,8 +81,10 @@ class WorkExperienceController extends Controller
      * @param  \App\Models\WorkExperience  $work_experience
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, WorkExperience $work_experience)
+    public function update(WorkExperienceRequest $request, WorkExperience $work_experience)
     {
+        $request->validated();
+
         $work_experience->work_experience = $request->work_experience;
         $work_experience->save();
 

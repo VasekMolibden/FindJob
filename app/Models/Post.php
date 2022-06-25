@@ -27,11 +27,6 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function profession()
-    {
-        return $this->belongsTo(Profession::class);
-    }
-
     public function education()
     {
         return $this->belongsTo(Education::class);

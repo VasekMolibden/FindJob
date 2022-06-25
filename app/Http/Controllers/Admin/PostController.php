@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostAddRequest;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\Education;
@@ -54,8 +55,10 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostAddRequest $request)
     {
+        $request->validated();
+
         $post = new Post();
         $post->name = $request->name;
         $post->post_type_id = $request->post_type_id;
@@ -113,8 +116,10 @@ class PostController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostAddRequest $request, Post $post)
     {
+        $request->validated();
+
         $post->name = $request->name;
         $post->post_type_id = $request->post_type_id;
         $post->city_id = $request->city_id;

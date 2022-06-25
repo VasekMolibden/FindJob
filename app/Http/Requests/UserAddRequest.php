@@ -15,7 +15,7 @@ class UserAddRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:20|string',
-            'phone' => 'required|max:12|string',
+            //'phone' => 'required|max:12|string',
             'email' => 'required|min:5|max:60|email|unique:users,email',
             'password' => 'required|min:5|max:40|string|confirmed',
             'image' => 'image|mimes:jpg,jpeg,png,bmp',

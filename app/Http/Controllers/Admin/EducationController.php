@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EducationRequest;
 use App\Models\Education;
 use Illuminate\Http\Request;
 
@@ -38,8 +39,10 @@ class EducationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EducationRequest $request)
     {
+        $request->validated();
+
         $education = new Education();
         $education->education = $request->education;
         $education->save();
@@ -78,8 +81,10 @@ class EducationController extends Controller
      * @param  \App\Models\Education  $education
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Education $education)
+    public function update(EducationRequest $request, Education $education)
     {
+        $request->validated();
+
         $education->education = $request->education;
         $education->save();
 

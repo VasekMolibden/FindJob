@@ -8,8 +8,8 @@
 
             @include('messages')
 
-            <form class="border border-1 mx-auto w-50 p-5" action="{{ route('updateUser', $user) }}" method="post"
-                  enctype="multipart/form-data" name="create">
+            <form class="border border-1 mx-auto p-5" action="{{ route('updateUser', $user) }}" method="post"
+                  enctype="multipart/form-data" name="create" style="width: 60%">
                 @csrf
                 @method('PUT')
                 <h4 class="mb-4 text-center"><b>Редактирование</b></h4>
@@ -20,11 +20,11 @@
                     <label for="name">Имя</label>
                 </div>
 
-                <div class="form-floating mb-3">
+                <!--<div class="form-floating mb-3">
                     <input type="text" name="phone" id="phone" class="form-control" maxlength="11" pattern="^[0-9]{11}$" placeholder="Телефон"
                            required value="{{ $user->phone }}">
                     <label for="phone">Телефон</label>
-                </div>
+                </div>-->
 
                 <div class="form-floating mb-3">
                     <input type="text" name="email" id="email" class="form-control" maxlength="60" placeholder="Почта" disabled
@@ -43,8 +43,23 @@
                     <input type="file" class="form-control form-control-sm" id="image" name="image">
                 </div>
 
+                @if(!$user->hasRole('admin') && auth()->user()->id != $user->id)
+                    <div class="mb-3" title="Роль">
+                        <label for="role_id" class="form-label">Роль</label>
+                        <select name="role_id" id="role_id" class="form-select" aria-label="role">
+                            @foreach($roles as $role)
+                                @if($role->name != 'admin')
+                                    <option value="{{ $role->id }}" @if($user->hasRole($role['name'])) selected @endif>{{ $role->name }}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
+                @endif
+
                 <div class="text-center text-end mb-5">
-                    <a type="btn" class="btn btn-outline-primary">Сменить пароль</a>
+                    @if(auth()->user()->id == $user->id)
+                        <a type="btn" href="{{ route('password.edit') }}" class="btn btn-outline-primary">Сменить пароль</a>
+                    @endif
                 </div>
 
                 <div class="text-center text-end mb-3">

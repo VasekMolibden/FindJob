@@ -12,11 +12,8 @@
         <h5 class="modal-title" id="ModalLabel">Контакты</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="Закрыть"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body my-3">
         <p>{{ $post->contacts }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
       </div>
     </div>
   </div>
@@ -34,14 +31,14 @@
             @endif
 		</div>
 		<div class="specifications1 ms-3 align-self-center">
-            <p><b>Город:</b> {{ $post->city->city }} ({{ $post->city->region->region }})</p>
-			<p><b>Тип:</b> {{ $post->post_type->post_type }}</p>
-			<p><b>Категория:</b> {{ $post->category->category }}</p>
+            <p><b><i class="fas fa-city opacity-25 me-1"></i>Город:</b> {{ $post->city->city }} ({{ $post->city->region->region }})</p>
+			<p><b><i class="fas fa-check-double opacity-25 me-2"></i>Тип:</b> {{ $post->post_type->post_type }}</p>
+			<p><b><i class="fas fa-list opacity-25 me-2"></i>Категория:</b> {{ $post->category->category }}</p>
 		</div>
 		<div class="specifications2 align-self-center">
-			<p><b>Образование:</b> {{ $post->education->education }}</p>
-			<p><b>Опыт работы:</b> {{ $post->work_experience->work_experience }}</p>
-			<p><b>График работы:</b> {{ $post->work_schedule->work_schedule }}</p>
+			<p><b><i class="fas fa-graduation-cap opacity-25 me-1"></i>Образование:</b> {{ $post->education->education }}</p>
+			<p><b><i class="fa-solid fa-chart-line opacity-25 me-2"></i>Опыт работы:</b> {{ $post->work_experience->work_experience }}</p>
+			<p><b><i class="fas fa-briefcase opacity-25 me-2"></i>График работы:</b> {{ $post->work_schedule->work_schedule }}</p>
 		</div>
 
 		<div class="img-post m-5">
@@ -101,12 +98,6 @@
 
 		<div class="load align-self-center">
 			<div class="text-center text-end mb-4">
-				<?php if(isset($_SESSION['email']) && (($_SESSION['id'] == $post["userID"]) || ($_SESSION['accessID'] > 1))):?>
-				<!--<button type="submit" name="submit" class="btn btn-outline-primary">Загрузить изображение</button>-->
-				<label for="load" class="btn btn-outline-primary">
-					Загрузить изображение <input type="file" id="load" style="display: none;">
-				</label>
-				<?php endif;?>
 			</div>
 		</div>
 		<div class="edit">

@@ -7,6 +7,7 @@ use App\Http\Requests\UserLoginRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,12 @@ class AuthController extends Controller
         $data["password"] = Hash::make($request["password"]);
         $data["image"] = $request->image? $request->image->store('public/img/user_img'):'img/user_img/placeholder.jpg';
         $user = User::create($data);
-        $user->assignRole('user');
-        return redirect('login')->with('success', 'Регистрация завершена.');
+        if($user){
+            $user->assignRole('user');
+            event(new Registered($user));
+            //auth('web')->login($user);
+            return redirect(route('login'))->with('success', 'Для завершения регистрации перейдите по ссылке в письме, отправленном на Вашу почту.');
+        }
+        return redirect(route('register'))->withErrors(["error" => "Ошибка при регистрации."]);
     }
 }

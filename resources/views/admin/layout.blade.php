@@ -50,7 +50,7 @@
 
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-secondary elevation-4">
         <!-- Brand Logo -->
         <a href="{{ route('index') }}" class="brand-link" style="text-decoration: none;">
             <img src="{{ asset('img/logo.png') }}" alt="logo"
@@ -63,7 +63,7 @@
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{{ asset(Auth::user()->image) }}" class="img-circle" alt="user_img">
+                    <img src="{{ asset(Auth::user()->image) }}" class="img-circle" alt="user_img" style="height: 2.1rem;">
                 </div>
                 <div class="info">
                     <a href="{{route('profile', Auth::user()->id)}}" class="d-block" style="text-decoration: none;">{{ Auth::user()->name }}</a>
@@ -363,9 +363,9 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/admin/dist/js/pages/dashboard.js"></script>
 <script type="text/javascript" src="/admin/dist/js/jquery.colorbox-min.js"></script>
-<script src="https://cdn.tiny.cloud/1/14stg90qs04ggumtrl3qdykdty6hvdb9p9bryig39coflae5/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="{{ asset('tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
 <script type="text/javascript" src="/packages/barryvdh/elfinder/js/standalonepopup.js"></script>
-<script src="/admin/admin.js"></script>
+<script src="{{ asset('/admin/admin.js') }}"></script>
 </body>
 
 </html>

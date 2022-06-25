@@ -28,7 +28,7 @@ tinymce.init({
     relative_urls: false,
     toolbar: "undo redo | bold italic underline strikethrough | superscript subscript | link | preview | removeformat",
     contextmenu: false,
-    invalid_elements :'br,div,img,table,td,th,tr,header,body,h1,h2,h3,h4,h5,article',
+    invalid_elements :'br,div,img,table,td,th,tr,header,body,h1,h2,h3,h4,h5,article,li,ul',
     invalid_styles: 'color font-size font-weight font-style font-family background-color box-sizing margin padding max-width line-height white-space -webkit-tap-highlight-color',
     entity_encoding: 'raw',
     setup: function(ed)

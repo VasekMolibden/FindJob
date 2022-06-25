@@ -11,7 +11,6 @@ use App\Models\City;
 use App\Models\Education;
 use App\Models\Post;
 use App\Models\PostType;
-use App\Models\Profession;
 use App\Models\Region;
 use App\Models\WorkExperience;
 use App\Models\WorkSchedule;
